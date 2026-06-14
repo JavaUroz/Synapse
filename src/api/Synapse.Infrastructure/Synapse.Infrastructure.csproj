@@ -12,4 +12,8 @@
     <PackageReference Include="Oracle.EntityFrameworkCore" Version="8.23.26200" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Synapse.Domain\Synapse.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synapse.Api", "Synapse.Api.csproj", "{7DC322B8-20B0-488A-A52F-01E178B1F68E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synapse.Api", "Synapse.Api.csproj", "{7DC322B8-20B0-488A-A52F-01E178B1F68E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synapse.Domain", "..\Synapse.Domain\Synapse.Domain.csproj", "{763AA533-A6B2-4ACD-B686-0B61D68D8FCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synapse.Domain", "..\Synapse.Domain\Synapse.Domain.csproj", "{763AA533-A6B2-4ACD-B686-0B61D68D8FCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synapse.Application", "..\Synapse.Application\Synapse.Application.csproj", "{70066CA1-E8B4-4548-A970-27683099B389}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synapse.Application", "..\Synapse.Application\Synapse.Application.csproj", "{70066CA1-E8B4-4548-A970-27683099B389}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synapse.Infrastructure", "..\Synapse.Infrastructure\Synapse.Infrastructure.csproj", "{1882960A-49E2-46C6-9D0B-5E072A7CEDC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synapse.Infrastructure", "..\Synapse.Infrastructure\Synapse.Infrastructure.csproj", "{1882960A-49E2-46C6-9D0B-5E072A7CEDC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
