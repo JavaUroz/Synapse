@@ -19,8 +19,10 @@ public static class DependencyInjection
         {
             _ = provider switch
             {
-                "SqlServer" => options.UseSqlServer(connectionString),
-                "PostgreSql" => options.UseOracle(connectionString),
+                "SqlServer" => options.UseSqlServer(connectionString,
+                    x => x.MigrationsAssembly("Synapse.Infrastructure")),
+                "Oracle" => options.UseOracle(connectionString,
+                    x => x.MigrationsAssembly("Synapse.Infrastructure.Oracle")),
                 _ => throw new InvalidOperationException($"Unsupported database provider: {provider}")
             };
         });
