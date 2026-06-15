@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Synapse.Application\Synapse.Application.csproj" />
     <ProjectReference Include="..\Synapse.Infrastructure.Oracle\Synapse.Infrastructure.Oracle.csproj" />
     <ProjectReference Include="..\Synapse.Infrastructure\Synapse.Infrastructure.csproj" />
