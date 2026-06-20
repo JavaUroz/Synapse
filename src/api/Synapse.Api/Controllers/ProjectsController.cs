@@ -1,43 +1,45 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Synapse.Application.Features.Projects;
+using Synapse.Application.Features.Projects.Commands;
+using Synapse.Application.Features.Projects.Queries;
 using Synapse.Domain.Entities;
-using Synapse.Infrastructure.Persistence;
+using System.Net.Http.Headers;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
-namespace Synapse.Api.Controllers
+namespace Synapse.Api.Controllers;
+
+[ApiController]
+[Route("api/[Controller]")]
+public class ProjectsController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[Controller]")]
-    public class ProjectsController : ControllerBase
+    public readonly IMediator _mediator;
+
+    public ProjectsController (IMediator mediator)
     {
-        public readonly IProjectService _projectService;
-
-        public ProjectsController (IProjectService projectService)
-        {
-            _projectService = projectService;
-        }
-
-        #region Get
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Project>>> GetAll()
-        {
-            var projects = await _projectService.GetAllAsync();
-
-            return Ok(projects);
-        }
-        #endregion
-
-        #region Post
-        [HttpPost]
-        public async Task<ActionResult<Project>> Create(CreateProjectDto project)
-        {
-            if (project is null)
-                return BadRequest();
-
-            _projectService?.CreateAsync(project);
-
-            return Ok();
-        }
-        #endregion
+        _mediator = mediator;
     }
+
+    #region Get
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<ProjectDto>>> GetAll()
+    {
+        var projects = await _mediator.Send(new GetAllProjectsQuery());
+
+        return Ok(projects);
+    }
+    #endregion
+
+    #region Post
+    [HttpPost]
+    public async Task<ActionResult<ProjectDto>> Create(CreateProjectCommand project)
+    {
+        if (string.IsNullOrEmpty(project.Name))
+            return BadRequest("Project name is required.");
+
+        var result = await _mediator.Send(project);
+
+        return CreatedAtAction(nameof(GetAll), new { id = result.Id }, result);
+    }
+    #endregion
 }

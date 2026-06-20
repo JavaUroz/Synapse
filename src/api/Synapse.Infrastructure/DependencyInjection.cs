@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Synapse.Application.Common.Interfaces;
 using Synapse.Infrastructure.Persistence;
 
 namespace Synapse.Infrastructure;
@@ -26,6 +27,8 @@ public static class DependencyInjection
                 _ => throw new InvalidOperationException($"Unsupported database provider: {provider}")
             };
         });
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

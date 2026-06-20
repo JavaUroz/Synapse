@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Synapse.Application\Synapse.Application.csproj" />
     <ProjectReference Include="..\Synapse.Domain\Synapse.Domain.csproj" />
   </ItemGroup>
 

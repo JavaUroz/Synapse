@@ -7,7 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Synapse.Infrastructure\Synapse.Infrastructure.csproj" />
+    <PackageReference Include="MediatR" Version="14.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Synapse.Domain\Synapse.Domain.csproj" />
   </ItemGroup>
 
 </Project>

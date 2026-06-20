@@ -8,43 +8,42 @@ using Synapse.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace Synapse.Infrastructure.Oracle.Migrations
+namespace Synapse.Infrastructure.Oracle.Migrations;
+
+[DbContext(typeof(SynapseDbContext))]
+partial class SynapseDbContextModelSnapshot : ModelSnapshot
 {
-    [DbContext(typeof(SynapseDbContext))]
-    partial class SynapseDbContextModelSnapshot : ModelSnapshot
+    protected override void BuildModel(ModelBuilder modelBuilder)
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.28")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+        modelBuilder
+            .HasAnnotation("ProductVersion", "8.0.28")
+            .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+        OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Synapse.Domain.Entities.Project", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("RAW(16)");
+        modelBuilder.Entity("Synapse.Domain.Entities.Project", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("RAW(16)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TIMESTAMP(7)");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("TIMESTAMP(7)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("NVARCHAR2(200)");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("NVARCHAR2(200)");
 
-                    b.Property<string>("RepositoryUrl")
-                        .HasMaxLength(500)
-                        .HasColumnType("NVARCHAR2(500)");
+                b.Property<string>("RepositoryUrl")
+                    .HasMaxLength(500)
+                    .HasColumnType("NVARCHAR2(500)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Projects", (string)null);
-                });
+                b.ToTable("Projects", (string)null);
+            });
 #pragma warning restore 612, 618
-        }
     }
 }

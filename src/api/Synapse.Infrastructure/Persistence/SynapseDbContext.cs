@@ -5,10 +5,7 @@ namespace Synapse.Infrastructure.Persistence;
 
 public class SynapseDbContext : DbContext
 {
-    public SynapseDbContext(DbContextOptions<SynapseDbContext> options) : base(options)
-    {
-        
-    }
+    public SynapseDbContext(DbContextOptions<SynapseDbContext> options) : base(options) { }
 
     public DbSet<Project> Projects => Set<Project>();
 
