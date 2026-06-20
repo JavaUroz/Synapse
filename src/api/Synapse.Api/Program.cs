@@ -5,6 +5,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<Synapse.Api.GraphQL.Query>()
+    .AddProjections()
+    .AddFiltering()
+    .AddSorting();
 
 // Add services to the container.
 
@@ -27,5 +33,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGraphQL();
 
 app.Run();
