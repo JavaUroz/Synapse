@@ -7,14 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.28" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.28" />
     <PackageReference Include="Oracle.EntityFrameworkCore" Version="8.23.26200" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Synapse.Application\Synapse.Application.csproj" />
-    <ProjectReference Include="..\Synapse.Domain\Synapse.Domain.csproj" />
+    <ProjectReference Include="..\Synapse.Infrastructure\Synapse.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

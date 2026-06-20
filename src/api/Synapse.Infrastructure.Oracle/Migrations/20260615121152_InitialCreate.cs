@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Synapse.Infrastructure.Persistence.Migrations;
+namespace Synapse.Infrastructure.Oracle.Migrations;
 
 /// <inheritdoc />
 public partial class InitialCreate : Migration
@@ -15,10 +14,10 @@ public partial class InitialCreate : Migration
             name: "Projects",
             columns: table => new
             {
-                Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                RepositoryUrl = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                Id = table.Column<Guid>(type: "RAW(16)", nullable: false),
+                Name = table.Column<string>(type: "NVARCHAR2(200)", maxLength: 200, nullable: false),
+                RepositoryUrl = table.Column<string>(type: "NVARCHAR2(500)", maxLength: 500, nullable: true),
+                CreatedAt = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false)
             },
             constraints: table =>
             {

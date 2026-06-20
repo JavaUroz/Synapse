@@ -2,13 +2,13 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Oracle.EntityFrameworkCore.Metadata;
 using Synapse.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace Synapse.Infrastructure.Persistence.Migrations;
+namespace Synapse.Infrastructure.Oracle.Migrations;
 
 [DbContext(typeof(SynapseDbContext))]
 partial class SynapseDbContextModelSnapshot : ModelSnapshot
@@ -20,25 +20,25 @@ partial class SynapseDbContextModelSnapshot : ModelSnapshot
             .HasAnnotation("ProductVersion", "8.0.28")
             .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-        SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+        OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
         modelBuilder.Entity("Synapse.Domain.Entities.Project", b =>
             {
                 b.Property<Guid>("Id")
                     .ValueGeneratedOnAdd()
-                    .HasColumnType("uniqueidentifier");
+                    .HasColumnType("RAW(16)");
 
                 b.Property<DateTime>("CreatedAt")
-                    .HasColumnType("datetime2");
+                    .HasColumnType("TIMESTAMP(7)");
 
                 b.Property<string>("Name")
                     .IsRequired()
                     .HasMaxLength(200)
-                    .HasColumnType("nvarchar(200)");
+                    .HasColumnType("NVARCHAR2(200)");
 
                 b.Property<string>("RepositoryUrl")
                     .HasMaxLength(500)
-                    .HasColumnType("nvarchar(500)");
+                    .HasColumnType("NVARCHAR2(500)");
 
                 b.HasKey("Id");
 
