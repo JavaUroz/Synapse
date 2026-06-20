@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Synapse.Application.Features.Projects;
 using Synapse.Domain.Entities;
 using Synapse.Infrastructure.Persistence;
 
@@ -9,18 +10,18 @@ namespace Synapse.Api.Controllers
     [Route("api/[Controller]")]
     public class ProjectsController : ControllerBase
     {
-        public readonly SynapseDbContext _context;
+        public readonly IProjectService _projectService;
 
-        public ProjectsController(SynapseDbContext context)
+        public ProjectsController (IProjectService projectService)
         {
-            _context = context;
+            _projectService = projectService;
         }
 
         #region Get
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Project>>> GetAll()
         {
-            var projects = await _context.Projects.ToListAsync();
+            var projects = await _projectService.GetAllAsync();
 
             return Ok(projects);
         }
@@ -28,11 +29,14 @@ namespace Synapse.Api.Controllers
 
         #region Post
         [HttpPost]
-        public async Task<ActionResult<Project>> Create(Project project)
+        public async Task<ActionResult<Project>> Create(CreateProjectDto project)
         {
-            _context.Projects.Add(project);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetAll), new { id = project.Id }, project);
+            if (project is null)
+                return BadRequest();
+
+            _projectService?.CreateAsync(project);
+
+            return Ok();
         }
         #endregion
     }
