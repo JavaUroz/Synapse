@@ -1,5 +1,6 @@
 using Synapse.Application;
 using Synapse.Infrastructure;
+using Synapse.Api.GraphQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +8,8 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services
     .AddGraphQLServer()
-    .AddQueryType<Synapse.Api.GraphQL.Query>()
+    .AddQueryType<Query>()
+    .AddMutationType<Mutation>()
     .AddProjections()
     .AddFiltering()
     .AddSorting();
