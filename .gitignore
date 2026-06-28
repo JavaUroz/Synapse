@@ -430,3 +430,8 @@ FodyWeavers.xsd
 /src/api/Synapse.Api/appsettings.Development.json
 # Angular environments
 src/frontend/synapse-ui/src/environments/environment.ts
+# Python
+src/ai-agents/.venv/
+src/ai-agents/__pycache__/
+src/ai-agents/**/__pycache__/
+src/ai-agents/.env
