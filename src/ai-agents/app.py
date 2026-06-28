@@ -3,8 +3,16 @@ from pydantic import BaseModel
 from datetime import datetime, timezone
 from agents.code_reviewer.graph import reviewer_graph
 from db.mongo import reviews_collection
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Synapse AI Agents", version="1.0.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class ReviewRequest(BaseModel):
     pr_url: str
