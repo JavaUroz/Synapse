@@ -4,6 +4,8 @@ from langchain_anthropic import ChatAnthropic
 from langchain_core.messages import HumanMessage
 import os
 from dotenv import load_dotenv
+from github import Github
+import re
 
 load_dotenv()
 
@@ -22,24 +24,30 @@ model = ChatAnthropic(
 
 # --- Nodes ---
 def fetch_pr(state: ReviewState) -> ReviewState:
-    """Simula la obtención del diff de un PR (mock por ahora)."""
-    mock_diff = """
-    diff --git a/src/Service.cs b/src/Service.cs
-    + public class UserService {
-    +     public void ProcessUser(User user) {
-    +         // validate
-    +         if (user.Email == null) throw new Exception("Invalid");
-    +         // save
-    +         var db = new DatabaseContext();
-    +         db.Users.Add(user);
-    +         db.SaveChanges();
-    +         // send email
-    +         var smtp = new SmtpClient();
-    +         smtp.Send(user.Email, "Welcome!");
-    +     }
-    + }
-    """
-    return {**state, "diff": mock_diff}
+    """Obtiene el diff real de un PR desde GitHub."""
+    pr_url = state["pr_url"]
+    
+    # Parsear URL: https://github.com/owner/repo/pull/123
+    match = re.match(r"https://github\.com/([^/]+)/([^/]+)/pull/(\d+)", pr_url)
+    if not match:
+        return {**state, "diff": "Error: Invalid PR URL format"}
+    
+    owner, repo_name, pr_number = match.groups()
+    
+    gh = Github(os.getenv("GITHUB_TOKEN"))
+    repo = gh.get_repo(f"{owner}/{repo_name}")
+    pr = repo.get_pull(int(pr_number))
+    
+    # Obtener los archivos modificados y sus diffs
+    files = pr.get_files()
+    diff_content = f"PR #{pr_number}: {pr.title}\n\n"
+    
+    for file in files:
+        diff_content += f"### {file.filename}\n"
+        if file.patch:
+            diff_content += f"{file.patch}\n\n"
+    
+    return {**state, "diff": diff_content}
 
 
 def analyze_code(state: ReviewState) -> ReviewState:
