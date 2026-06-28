@@ -16,8 +16,8 @@
     </div>
     <div class="stat-card">
       <div class="stat-label">PRs Reviewed</div>
-      <div class="stat-value green">38</div>
-      <div class="stat-delta">↑ 12 since Monday</div>
+      <div class="stat-value green">{{ totalReviews() }}</div>
+      <div class="stat-delta">by AI agents</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Schemas Audited</div>
@@ -31,41 +31,72 @@
     </div>
   </div>
 
-  <!-- PROJECTS TABLE -->
-  <div class="card">
-    <div class="card__header">
-      <div>
-        <div class="card__title">Projects</div>
-        <div class="card__sub">Repositories connected to Synapse</div>
+  <!-- TWO COL -->
+  <div class="two-col">
+    <!-- PROJECTS TABLE -->
+    <div class="card">
+      <div class="card__header">
+        <div>
+          <div class="card__title">Projects</div>
+          <div class="card__sub">Repositories connected to Synapse</div>
+        </div>
       </div>
+
+      @if (loading()) {
+        <div class="state-msg">Loading projects...</div>
+      } @else if (error()) {
+        <div class="state-msg error">{{ error() }}</div>
+      } @else if (projects().length === 0) {
+        <div class="state-msg">No projects yet — add your first repository.</div>
+      } @else {
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>Repository</th>
+              <th>Created</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (project of projects(); track project.id) {
+              <tr>
+                <td><strong>{{ project.name }}</strong></td>
+                <td><span class="repo-link">{{ project.repositoryUrl ?? '—' }}</span></td>
+                <td class="mono">{{ project.createdAt | date:'dd/MM/yyyy' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
     </div>
 
-    @if (loading()) {
-      <div class="state-msg">Loading projects...</div>
-    } @else if (error()) {
-      <div class="state-msg error">{{ error() }}</div>
-    } @else if (projects().length === 0) {
-      <div class="state-msg">No projects yet — add your first repository.</div>
-    } @else {
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Project</th>
-            <th>Repository</th>
-            <th>Created</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (project of projects(); track project.id) {
-            <tr>
-              <td><strong>{{ project.name }}</strong></td>
-              <td><span class="repo-link">{{ project.repositoryUrl ?? '—' }}</span></td>
-              <td class="mono">{{ project.createdAt | date:'dd/MM/yyyy' }}</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    }
-  </div>
+    <!-- ACTIVITY FEED -->
+    <div class="card">
+      <div class="card__header">
+        <div>
+          <div class="card__title">Recent Reviews</div>
+          <div class="card__sub">Code reviews by AI agents</div>
+        </div>
+        <span class="pill pill--green">{{ totalReviews() }} total</span>
+      </div>
 
+      @if (reviews().length === 0) {
+        <div class="state-msg">No reviews yet.</div>
+      } @else {
+        @for (review of reviews(); track review.id) {
+          <div class="activity-item">
+            <div class="activity-icon">✓</div>
+            <div>
+              <div class="activity-text">
+                <strong>code-reviewer</strong> analyzed
+                <span class="repo-link">{{ review.pr_url | slice:19 }}</span>
+              </div>
+              <div class="activity-preview">{{ review.report_preview }}</div>
+              <div class="activity-time">{{ review.created_at | date:'dd/MM HH:mm' }}</div>
+            </div>
+          </div>
+        }
+      }
+    </div>
+  </div>
 </div>
