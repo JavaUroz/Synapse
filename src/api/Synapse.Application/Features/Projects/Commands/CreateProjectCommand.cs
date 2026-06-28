@@ -25,6 +25,7 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
         };
 
         await _unitOfWork.Projects.AddAsync(project);
+        await _unitOfWork.SaveChangesAsync();
 
         return new ProjectDto(project.Id, project.Name, project.RepositoryUrl, project.CreatedAt);
     }

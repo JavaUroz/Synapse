@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
         this.projectService.getAll().subscribe({
             next: (data) => {
                 this.projects.set(data);
-                this.loading.set(true);
+                this.loading.set(false);
             },
             error: (err) => {
                 this.error.set('Failed to load projects...');
