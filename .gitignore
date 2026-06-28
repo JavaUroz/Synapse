@@ -428,3 +428,5 @@ FodyWeavers.xsd
 *.msm
 *.msp
 /src/api/Synapse.Api/appsettings.Development.json
+# Angular environments
+src/frontend/synapse-ui/src/environments/environment.ts
